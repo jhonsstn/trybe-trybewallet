@@ -3,7 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { userLogin } from '../actions/userLogin';
 
-const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{3})+$/;
+// Regex retirado de: https://stackoverflow.com/questions/15017052/understanding-email-validation-using-javascript
+const EMAIL_REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
 class Login extends React.Component {
   constructor() {
@@ -14,15 +15,9 @@ class Login extends React.Component {
       password: '',
       disabled: true,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.isEmailValid = this.isEmailValid.bind(this);
-    this.isPasswordValid = this.isPasswordValid.bind(this);
-    this.isSubmitDisabled = this.isSubmitDisabled.bind(this);
   }
 
-  handleChange({ target }) {
+  handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState(
       {
@@ -30,30 +25,30 @@ class Login extends React.Component {
       },
       () => this.isSubmitDisabled(),
     );
-  }
+  };
 
-  isEmailValid() {
+  isEmailValid = () => {
     const { email } = this.state;
     return EMAIL_REGEX.test(email);
-  }
+  };
 
-  isPasswordValid() {
+  isPasswordValid = () => {
     const { password } = this.state;
     const minPassLength = 6;
     return password.length >= minPassLength;
-  }
+  };
 
-  isSubmitDisabled() {
+  isSubmitDisabled = () => {
     this.setState({
       disabled: !(this.isEmailValid() && this.isPasswordValid()),
     });
-  }
+  };
 
-  handleSubmit() {
+  handleSubmit = () => {
     const { login, history } = this.props;
     login(this.state);
     history.push('/carteira');
-  }
+  };
 
   render() {
     const { email, password, disabled } = this.state;
