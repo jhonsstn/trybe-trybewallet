@@ -4,5 +4,3 @@ export const userLogin = (payload) => ({
   type: USER_LOGIN,
   payload,
 });
-
-export const wallet = () => {};
