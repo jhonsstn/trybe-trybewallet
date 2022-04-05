@@ -5,12 +5,10 @@ const fetchCurrenciesSuccess = (currencies) => ({
   currencies,
 });
 
-const fetchCurrenciesFromAPI = async (dispatch) => {
+export const fetchCurrenciesAction = () => async function fetchAPI(dispatch) {
   const URL = 'https://economia.awesomeapi.com.br/json/all';
   const response = await fetch(URL);
   const data = await response.json();
   const currencies = Object.keys(data).filter((key) => key !== 'USDT');
   dispatch(fetchCurrenciesSuccess(currencies));
 };
-
-export const fetchCurrenciesAction = () => fetchCurrenciesFromAPI;
